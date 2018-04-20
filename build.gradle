@@ -1,0 +1,126 @@
+buildscript {
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.3.2.3')
+    }
+}
+
+plugins {
+//    id 'com.github.hierynomus.license' version '0.13.1'
+    id 'maven-publish'
+    id 'net.nemerosa.versioning' version '2.6.1'
+    id 'com.jfrog.bintray' version '1.7.2'
+    id 'com.github.ben-manes.versions' version '0.13.0'
+}
+
+ext.VRL_VERSION = '0.4.3.2.3'
+
+apply plugin: 'java'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.6'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+
+    maven {
+        url 'https://dl.bintray.com/miho/JCSG/'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.10'
+
+    compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: VRL_VERSION)
+    compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: VRL_VERSION, classifier: 'sources')
+    compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: VRL_VERSION, classifier: 'javadoc')
+
+    compile group: 'eu.mihosoft.vrl.jcsg', name:'jcsg', version: '0.5.7'
+//    compile group: 'eu.mihosoft.vrl.jcsg', name:'jcsg', version: '0.5.7', classifier: 'sources'
+//    compile group: 'eu.mihosoft.vrl.jcsg', name:'jcsg', version: '0.5.7', classifier: 'javadoc'
+//
+//    compile group: 'eu.mihosoft.jcsg.ext.path', name:'jcsg-pathextensions', version: '0.2.5'
+//    compile group: 'eu.mihosoft.jcsg.ext.path', name:'jcsg-pathextensions', version: '0.2.5', classifier: 'sources'
+//    compile group: 'eu.mihosoft.jcsg.ext.path', name:'jcsg-pathextensions', version: '0.2.5', classifier: 'javadoc'
+//
+//    compile group: 'eu.mihosoft.jcsg.ext.mesh', name:'jcsg-meshextensions', version: '0.5.1'
+//    compile group: 'eu.mihosoft.jcsg.ext.mesh', name:'jcsg-meshextensions', version: '0.5.1', classifier: 'sources'
+//    compile group: 'eu.mihosoft.jcsg.ext.mesh', name:'jcsg-meshextensions', version: '0.5.1', classifier: 'javadoc'
+
+    compile group: 'eu.mihosoft.vrl.vrljogl', name: 'vrl-jogl', version: '0.4.1'
+
+    compile group: 'eu.mihosoft.vcsg', name: 'vcsg', version: '0.1'
+    compile group: 'eu.mihosoft.vcsg.vcsgdist', name: 'vcsg-dist', version: '0.9'
+
+    // compile files("lib/jars/")
+}
+
+apply from: 'gradle/publishing.gradle'
+
+def loadProperties(String sourceFileName) {
+
+    def config = new Properties()
+    def propFile = new File(projectDir,sourceFileName)
+
+    if (propFile.isFile()) {
+        config.load(new FileInputStream(propFile))
+        for (Map.Entry property in config) {
+            ext.set(property.key, property.value)
+        }
+    }
+}
+
+jar {
+    // project class files compiled from source
+    from files(sourceSets.main.output.classesDirs)
+}
+
+// loads the property file
+loadProperties('build.properties')
+
+String getVRLDir() {
+
+    String result;
+
+    if (vrldir.isEmpty()) {
+        result = System.getProperty("user.home");
+        result+= "/.vrl/"
+        result+= eu.mihosoft.vrl.system.Constants.VERSION_MAJOR
+        result+= "/default"
+    } else {
+        result = vrldir;
+    }
+
+    return result
+}
+
+// compiles and installs the vrl plugin to the specified folder
+task installVRLPlugin(dependsOn: [clean, publicationVRLPluginJar]) {
+    doLast {
+        println(">> copying vrl plugin to: " + getVRLDir() + "/plugin-updates")
+
+        copy {
+            from buildDir.getPath() + "/libs/" + rootProject.name + ".vrlplugin"
+            into getVRLDir() + "/plugin-updates/"
+            include rootProject.name + ".vrlplugin"
+            rename (rootProject.name + ".vrlplugin", rootProject.name + ".jar")
+        }
+    }
+}
+

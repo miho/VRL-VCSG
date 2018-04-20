@@ -1,0 +1,15 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gradle/
+.idea/inspectionProfiles/
+.idea/workspace.xml
+
+VRL-JCSG.iml
+
+#gradle/
+#gradlew
+#gradlew.bat
+#settings.gradle
+#src/
+/.idea/
+build
+out/
