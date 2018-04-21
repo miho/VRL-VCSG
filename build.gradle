@@ -63,7 +63,7 @@ dependencies {
 //    compile group: 'eu.mihosoft.jcsg.ext.mesh', name:'jcsg-meshextensions', version: '0.5.1', classifier: 'sources'
 //    compile group: 'eu.mihosoft.jcsg.ext.mesh', name:'jcsg-meshextensions', version: '0.5.1', classifier: 'javadoc'
 
-    compile group: 'eu.mihosoft.vrl.vrljogl', name: 'vrl-jogl', version: '0.4.1'
+    compile group: 'eu.mihosoft.vrl.vrljogl', name: 'vrl-jogl', version: '0.4.2'
 
     compile group: 'eu.mihosoft.vcsg', name: 'vcsg', version: '0.1'
     compile group: 'eu.mihosoft.vcsg.vcsgdist', name: 'vcsg-dist', version: '0.9'
