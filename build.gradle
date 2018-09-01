@@ -65,7 +65,7 @@ dependencies {
 
     compile group: 'eu.mihosoft.vrl.vrljogl', name: 'vrl-jogl', version: '0.4.2'
 
-    compile group: 'eu.mihosoft.vcsg', name: 'vcsg', version: '0.5'
+    compile group: 'eu.mihosoft.vcsg', name: 'vcsg', version: '0.6'
     compile group: 'eu.mihosoft.vcsg.vcsgdist', name: 'vcsg-dist', version: '0.9.2'
 
     // compile files("lib/jars/")
