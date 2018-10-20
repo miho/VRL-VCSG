@@ -23,6 +23,8 @@ import java.nio.file.Files;
 @TypeInfo(input = false, output = true, style = "default", type = CSG.class)
 public class CSGOutputType extends JoglType {
     private CSG viewValue;
+
+    private static double TOL = 0.5;
     
     @Override
     public void setViewValue(Object o) {
@@ -32,7 +34,7 @@ public class CSGOutputType extends JoglType {
 
             try {
                 File stlFile = Files.createTempFile("vrl_stl", ".stl").toFile();
-                csg.toSTL(stlFile);
+                csg.toSTL(stlFile, TOL);
                 GLMeshCanvas meshCanvas = new GLMeshCanvas(new STLLoader().loadMesh(stlFile));
                 meshCanvas.setSkipInitAnimation(true);
                 super.setViewValue(meshCanvas);
@@ -59,6 +61,10 @@ public class CSGOutputType extends JoglType {
     @Override
     public boolean preferBinarySerialization() {
         return true;
+    }
+
+    public static void setTOLForVisualization(double tol) {
+        CSGOutputType.TOL = tol;
     }
     
     

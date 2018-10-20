@@ -2,6 +2,7 @@
 .gradle/
 .idea/inspectionProfiles/
 .idea/workspace.xml
+/bin/
 
 VRL-VCSG.iml
 
@@ -13,3 +14,9 @@ VRL-VCSG.iml
 /.idea/
 build
 out/
+
+/.eclipse
+/.classpath
+/.project
+/.vscode
+/.settings
