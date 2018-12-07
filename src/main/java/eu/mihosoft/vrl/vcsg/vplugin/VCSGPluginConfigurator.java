@@ -21,7 +21,7 @@ public class VCSGPluginConfigurator extends VPluginConfigurator{
 
     public VCSGPluginConfigurator() {
           //specify the plugin name and version
-       setIdentifier(new PluginIdentifier("VCSG", "0.6.0"));
+       setIdentifier(new PluginIdentifier("VCSG", "0.6.3"));
 
        // optionally allow other plugins to use the api of this plugin
        // you can specify packages that shall be
