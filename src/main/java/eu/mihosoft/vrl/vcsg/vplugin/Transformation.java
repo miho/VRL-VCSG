@@ -5,7 +5,7 @@
  */
 package eu.mihosoft.vrl.vcsg.vplugin;
 
-import eu.mihosoft.jcsg.CSG;
+import eu.mihosoft.vcsg.CSG;
 import eu.mihosoft.vrl.annotation.ComponentInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
 import eu.mihosoft.vvecmath.Transform;
