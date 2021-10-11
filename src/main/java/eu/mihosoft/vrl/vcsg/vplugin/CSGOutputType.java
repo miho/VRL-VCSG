@@ -24,7 +24,7 @@ import java.nio.file.Files;
 public class CSGOutputType extends JoglType {
     private CSG viewValue;
 
-    private static double TOL = 0.5;
+    public static double TOL = 0.5;
     
     @Override
     public void setViewValue(Object o) {
@@ -38,7 +38,7 @@ public class CSGOutputType extends JoglType {
                 GLMeshCanvas meshCanvas = new GLMeshCanvas(new STLLoader().loadMesh(stlFile));
                 meshCanvas.setSkipInitAnimation(true);
                 super.setViewValue(meshCanvas);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
